@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.sunxiaoning</groupId>
+	<artifactId>xiaoyuanfuwu</artifactId>
+	<version>0.0.1</version>
+	<packaging>war</packaging>
+
+	<name>api</name>
+	<description>A framework with Spring Boot for web api</description>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.0.4.RELEASE</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+		<mybatis-spring-boot>1.2.0</mybatis-spring-boot>
+		<mysql-connector>5.1.39</mysql-connector>
+		<cxf.version>2.6.17</cxf.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+
+			<!-- 删除内置的tomcat -->
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-tomcat</artifactId>
+				</exclusion>
+			</exclusions>
+
+		</dependency>
+
+		<!-- 开发时，又需要依赖tomcat -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-servlet-api</artifactId>
+			<version>7.0.42</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- 工具类：JSON数据转换 -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.49</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+			<version>1.0.16</version>
+		</dependency>
+
+		<!-- 数据库：MySQL -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.21</version>
+		</dependency>
+
+		<!-- 数据库操作：mybatis -->
+		<dependency>
+			<groupId>org.mybatis.spring.boot</groupId>
+			<artifactId>mybatis-spring-boot-starter</artifactId>
+			<version>${mybatis-spring-boot}</version>
+		</dependency>
+
+		<!-- swagger2 API接口文档，自动生成 -->
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>2.8.0</version>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>2.8.0</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<version>2.3.0</version>
+		</dependency>
+
+		<!-- 权限控制：token, JWT -->
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>0.9.1</version>
+		</dependency>
+
+		<!-- 加密 -->
+		<!-- https://mvnrepository.com/artifact/org.apache.shiro/shiro-core -->
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-core</artifactId>
+			<version>1.3.2</version>
+		</dependency>
+
+		<!-- HTTP请求 -->
+		<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5.6</version>
+		</dependency>
+
+		<!-- JPush -->
+		<dependency>
+			<groupId>cn.jpush.api</groupId>
+			<artifactId>jpush-client</artifactId>
+			<version>3.3.9</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-frontend-jaxws</artifactId>
+			<version>${cxf.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-transports-http</artifactId>
+			<version>${cxf.version}</version>
+		</dependency>
+
+	</dependencies>
+
+	<repositories>
+	</repositories>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+
+			<!--用于解决没有web.xml报错-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<warSourceExcludes>src/main/resources/**</warSourceExcludes>
+					<warName>liangtixi</warName>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.4.2</version>
+				<configuration>
+					<skipTests>true</skipTests>
+				</configuration>
+			</plugin>
+		</plugins>
+
+
+		<!-- 项目名称 -->
+		<finalName>xiaoyuanfuwu</finalName>
+	</build>
+</project>
