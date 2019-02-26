@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 
-@Api("账号管理")
+@Api("登录/注册")
 @RestController
 @RequestMapping(value = "/api/account", method = RequestMethod.POST)
 public class Account extends BaseController {
@@ -111,12 +111,6 @@ public class Account extends BaseController {
         user.put("token", JwtTools.genToken(user));
 
         return this.success(user);
-    }
-
-
-    @RequestMapping(value = "/changePassword")
-    public APIResponse changePassword() {
-        return this.fail("修改失败");
     }
 
 }

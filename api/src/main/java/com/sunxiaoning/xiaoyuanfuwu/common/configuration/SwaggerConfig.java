@@ -20,15 +20,15 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.univalsoft.api.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.sunxiaoning.xiaoyuanfuwu.api.controller"))
                 .paths(PathSelectors.any())
                 .build();
     }
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("环球软件 API 接口文档")
-                .description("具体项目名称，维护人")
+                .title("接口文档")
+                .description("校园资讯服务平台，孙肖宁")
 //                .termsOfServiceUrl("http://www.by-health.com/")
                 //.contact(contact)
                 .version("1.0")

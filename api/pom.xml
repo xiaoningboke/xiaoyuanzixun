@@ -178,7 +178,7 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<configuration>
 					<warSourceExcludes>src/main/resources/**</warSourceExcludes>
-					<warName>liangtixi</warName>
+					<warName>xiaoyuanfuwu</warName>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>
 			</plugin>
