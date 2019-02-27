@@ -3,10 +3,7 @@ package com.sunxiaoning.xiaoyuanfuwu.api.controller;
 import com.sunxiaoning.xiaoyuanfuwu.api.service.AccountService;
 import com.sunxiaoning.xiaoyuanfuwu.common.controller.BaseController;
 import com.sunxiaoning.xiaoyuanfuwu.common.model.APIResponse;
-import com.sunxiaoning.xiaoyuanfuwu.tools.Common;
-import com.sunxiaoning.xiaoyuanfuwu.tools.DateTools;
-import com.sunxiaoning.xiaoyuanfuwu.tools.FileTools;
-import com.sunxiaoning.xiaoyuanfuwu.tools.JwtTools;
+import com.sunxiaoning.xiaoyuanfuwu.tools.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -25,15 +22,18 @@ import java.util.HashMap;
 @RequestMapping(value = "/api/account", method = RequestMethod.POST)
 public class Account extends BaseController {
 
+    String filePath = PropertiesTools.applicationProperty("app.image.url");
+
     @Autowired
     private AccountService accountService;
 
     /**
      * 注册的接口
+     *
      * @param username 用户名
      * @param password 密码
-     * @param phone 手机号
-     * @param email 邮箱
+     * @param phone    手机号
+     * @param email    邮箱
      * @param portrait 头像base64
      * @return
      */
@@ -70,7 +70,7 @@ public class Account extends BaseController {
             user.put("password", password);
             user.put("phone", phone);
             user.put("email", email);
-            String imageFullName = FileTools.saveBase64Image(portrait, user_id); //保存图片
+            String imageFullName = FileTools.saveBase64Image(portrait); //保存图片
             user.put("portrait", imageFullName);
             user.put("create_time", DateTools.timesNow());
             accountService.add(user);
@@ -80,6 +80,7 @@ public class Account extends BaseController {
 
     /**
      * 登录接口
+     *
      * @param username 账号
      * @param password 密码
      * @return
@@ -109,7 +110,9 @@ public class Account extends BaseController {
 
         // 添加token
         user.put("token", JwtTools.genToken(user));
-
+        if (user.get("portrait") != null && user.get("portrait").toString().length() > 0) {
+            user.put("portrait", filePath + user.get("portrait"));
+        }
         return this.success(user);
     }
 

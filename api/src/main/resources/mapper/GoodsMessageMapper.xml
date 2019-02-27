@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sunxiaoning.xiaoyuanfuwu.api.dao.GoodsMessageDao">
+
+
+    <!--添加产品-->
+    <insert id="addGoods">
+      insert into xyfw_goods (goods_id,user_id, name, number, price, address, state, classify ,pic, content)
+      values (#{goods_id},#{user_id}, #{name}, #{number}, #{price}, #{address},#{state},#{classify},#{pic},#{content})
+    </insert>
+
+    <!--查询所有产品-->
+    <select id="selGoods" resultType="hashmap">
+        select g.*,u.username from xyfw_goods g
+        left join xyfw_user u
+        on g.user_id = u.user_id
+        where 1=1 and g.state!=2
+        <if test="shop != null and shop != ''">
+            and g.name LIKE "%"#{shop}"%"
+            or g.content LIKE "%"#{shop}"%"
+        </if>
+    </select>
+
+    <!--添加评论-->
+    <insert id="addComment">
+      insert into xyfw_goodsassess (assess_id,goods_id, content, pic )
+      values (#{assess_id},#{goods_id}, #{content},#{pic})
+    </insert>
+
+    <!--查询商品的详细信息-->
+    <select id="findGoods" resultType="hashmap">
+        select * from xyfw_goods
+        where 1=1
+        <if test="goods_id != null and goods_id != ''">
+            and goods_id = #{goods_id}
+        </if>
+    </select>
+
+    <!--查询所有该产品的所有评论-->
+    <select id="selAssess" resultType="hashmap">
+        select assess_id,content as gacontent,pic as gapic from xyfw_goodsassess
+        where 1=1
+        <if test="goods_id != null and goods_id != ''">
+            and goods_id = #{goods_id}
+        </if>
+    </select>
+
+    <!--查询该产品是不是该用户发布的-->
+    <select id="isGoods" resultType="hashmap">
+        select * from xyfw_goods
+        where 1=1
+        <if test="user_id != null and user_id != ''">
+            and user_id = #{user_id}
+        </if>
+        <if test="goods_id != null and goods_id != ''">
+            and goods_id = #{goods_id}
+        </if>
+        limit 1
+    </select>
+
+    <!--修改产品信息-->
+    <update id="updateGoods">
+        update xyfw_goods set
+        <if test="name != null and name != ''">
+            name = #{name},
+        </if>
+        <if test="number != null and number != ''">
+            number = #{number},
+        </if>
+        <if test="price != null and price != ''">
+            price = #{price},
+        </if>
+        <if test="address != null and address != ''">
+            address = #{address},
+        </if>
+        <if test="state != null and state != ''">
+            state = #{state},
+        </if>
+        <if test="classify != null and classify != ''">
+            classify = #{classify},
+        </if>
+        <if test="pic != null and pic != ''">
+            pic = #{pic},
+        </if>
+        <if test="content != null and content != ''">
+            content = #{content}
+        </if>
+        where goods_id = #{goods_id}
+    </update>
+
+    <!--更新商品状态-->
+    <update id="updateState">
+        update xyfw_goods set
+        <if test="state != null and state != ''">
+            state = #{state}
+        </if>
+        where goods_id = #{goods_id}
+    </update>
+</mapper>

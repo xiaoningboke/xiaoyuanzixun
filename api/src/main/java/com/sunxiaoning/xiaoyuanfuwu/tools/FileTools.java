@@ -7,7 +7,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class FileTools {
@@ -68,10 +70,9 @@ public class FileTools {
      * 保存图片
      *
      * @param base64image 图片base64字符串
-     * @param name 图片保存之后的名称
      * @return 文件名
      */
-    public static String saveBase64Image(String base64image,String name) {
+    public static String saveBase64Image(String base64image) {
 
         Date date = new Date();
         String dataForm = new SimpleDateFormat("yyyy-MM-dd").format(date);
@@ -84,10 +85,10 @@ public class FileTools {
         String fileType = FileTools.base64imageType(base64image);// "a.png";
         String fileName = FileTools.randomFileName(null);
         String fileContent = FileTools.base64imageContent(base64image);
-        String imageFullName = name + "." + fileType;
+        String imageFullName = fileName + "." + fileType;
 
         FileTools.saveBase64Images(fileContent, filePath + imageFullName);
-        return dataForm+'/'+imageFullName;
+        return dataForm + '/' + imageFullName;
     }
 
     /**
@@ -134,6 +135,19 @@ public class FileTools {
         }
     }
 
+    /**
+     * 处理图片数组
+     * @param images
+     * @return
+     */
+    public static ArrayList saveBase64Images(ArrayList images){
+        ArrayList<String> imgs = new ArrayList<String>();
+        for(int i = 0;i<images.size();i++){
+            String img = FileTools.saveBase64Image(images.get(i).toString());
+            imgs.add(img);
+        }
+        return imgs;
+    }
 
     /**
      * 从完整的路径中获取所在的文件夹目录

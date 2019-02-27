@@ -3,31 +3,31 @@
 <mapper namespace="com.sunxiaoning.xiaoyuanfuwu.api.dao.AccountDao">
 
 
-	<!--根据用户名查询用户信息-->
-	<select id="findUserByUsername" resultType="hashmap">
-		select * from xyfw_user
-		where 1=1
-		<if test="username != null and username != ''">
-			and USERNAME = #{username}
-		</if>
-		limit 1
-	</select>
-	<!--添加用户信息-->
-	<insert id="add">
+    <!--根据用户名查询用户信息-->
+    <select id="findUserByUsername" resultType="hashmap">
+        select * from xyfw_user
+        where 1=1
+        <if test="username != null and username != ''">
+            and USERNAME = #{username}
+        </if>
+        limit 1
+    </select>
+    <!--添加用户信息-->
+    <insert id="add">
       insert into xyfw_user (user_id,username, password, phone, email, portrait,create_time)
       values (#{user_id},#{username}, #{password}, #{phone}, #{email}, #{portrait},#{create_time})
     </insert>
-	<!--根据用户名密码查询用户信息-->
-	<select id="findUserByAccount" resultType="hashmap">
-		select * from xyfw_user
-		where 1=1
-		<if test="username != null and username != ''">
-			and USERNAME = #{username}
-		</if>
-		<if test="password != null and password != ''">
-			and PASSWORD = #{password}
-		</if>
-		limit 1
-	</select>
+    <!--根据用户名密码查询用户信息-->
+    <select id="findUserByAccount" resultType="hashmap">
+        select * from xyfw_user
+        where 1=1
+        <if test="username != null and username != ''">
+            and USERNAME = #{username}
+        </if>
+        <if test="password != null and password != ''">
+            and PASSWORD = #{password}
+        </if>
+        limit 1
+    </select>
 
 </mapper>
