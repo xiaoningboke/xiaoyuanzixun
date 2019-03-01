@@ -2,27 +2,110 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.sunxiaoning.xiaoyuanfuwu.api.dao.ExitUserMassageDao">
 
-	<!--修改用户的个人信息-->
-	<update id="updateUserMassage">
-        update xyfw_user  set
-		<if test="username != null and username != ''">
-			username = #{username},
-		</if>
-		<if test="phone != null and phone != ''">
-			phone = #{phone},
-		</if>
-		<if test="email != null and email != ''">
-			email = #{email}
-		</if>
+    <!--修改用户的个人信息-->
+    <update id="updateUserMassage">
+        update xyfw_user set
+        <if test="username != null and username != ''">
+            username = #{username},
+        </if>
+        <if test="phone != null and phone != ''">
+            phone = #{phone},
+        </if>
+        <if test="email != null and email != ''">
+            email = #{email}
+        </if>
         where user_id = #{user_id}
     </update>
 
-
+    <!--修改用户密码-->
     <update id="updatePassworld">
-        update xyfw_user  set
+        update xyfw_user set
         <if test="password != null and password != ''">
             password = #{password}
         </if>
         where user_id = #{user_id}
     </update>
+
+    <!--添加用户地址-->
+    <insert id="addAddress">
+      insert into xyfw_useraddress (address_id,user_id, contacts, tell, address, street,remarks,state)
+      values (#{address_id},#{user_id}, #{contacts}, #{tell}, #{address}, #{street},#{remarks},#{state})
+    </insert>
+
+    <!--修改地址的默认状态-->
+    <update id="updateState">
+        update xyfw_useraddress set
+        <if test="state != null and state != ''">
+            state = #{state}
+        </if>
+        <if test="address_id != null and address_id != ''">
+            where address_id != #{address_id}
+        </if>
+    </update>
+
+    <!--修改单一地址的默认状态-->
+    <update id="updateStatus">
+        update xyfw_useraddress set
+        state = #{state}
+        <if test="address_id != null and address_id != ''">
+            where address_id = #{address_id}
+        </if>
+    </update>
+
+    <!--修改地址信息-->
+    <update id="updateAddress">
+        update xyfw_useraddress set
+        <if test="contacts != null and contacts != ''">
+            contacts = #{contacts},
+        </if>
+        <if test="tell != null and tell != ''">
+            tell = #{tell},
+        </if>
+        <if test="address != null and address != ''">
+            address = #{address},
+        </if>
+        <if test="street != null and street != ''">
+            street = #{street},
+        </if>
+        <if test="remarks != null and remarks != ''">
+            remarks = #{remarks},
+        </if>
+        <if test="state != null and state != ''">
+            state = #{state}
+        </if>
+        <if test="address_id != null and address_id != ''">
+            where address_id = #{address_id}
+        </if>
+    </update>
+
+    <!--判断该地址属不属于该用户-->
+    <select id="findAddress" resultType="hashmap">
+        select * from xyfw_useraddress
+        where 1=1
+        <if test="address_id != null and address_id != ''">
+            and address_id = #{address_id}
+        </if>
+        <if test="user_id != null and user_id != ''">
+            and user_id = #{user_id}
+        </if>
+        limit 1
+    </select>
+
+    <!--删除（逻辑删除）某个地址-->
+    <update id="deleteAddress">
+        update xyfw_useraddress set
+        del = 1
+        <if test="address_id != null and address_id != ''">
+            where address_id = #{address_id}
+        </if>
+    </update>
+
+    <!--查询该用户的所有地址-->
+    <select id="selAddress" resultType="hashmap">
+        select * from xyfw_useraddress
+        where del!=1
+        <if test="user_id != null and user_id != ''">
+            and user_id = #{user_id}
+        </if>
+    </select>
 </mapper>

@@ -1,7 +1,6 @@
 package com.sunxiaoning.xiaoyuanfuwu.api.service;
 
-import io.swagger.models.auth.In;
-
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -27,4 +26,61 @@ public interface ExitUserMessageService {
      */
     Integer updatePassworld(HashMap<String, Object> obj);
 
+    /**
+     * 添加用户的地址
+     *
+     * @return
+     */
+    Integer addAddress(HashMap<String, Object> address);
+
+    /**
+     * 跟新状态
+     *
+     * @param address_id
+     * @param state
+     * @return
+     */
+    Integer updateState(String address_id, int state);
+
+    /**
+     * 更新状态
+     *
+     * @param address_id
+     * @param state
+     * @return
+     */
+    Integer updateStatus(String address_id, int state);
+
+    /**
+     * 修改地址信息
+     *
+     * @param address
+     * @return
+     */
+    Integer updateAddress(HashMap<String, Object> address);
+
+    /**
+     * 判断地址是不是属于该用户
+     *
+     * @param address_id 地址id
+     * @param user_id    用户id
+     * @return
+     */
+    HashMap<String, Object> findAddress(String address_id, String user_id);
+
+    /**
+     * 删除用户的地址
+     *
+     * @param address_id
+     * @return
+     */
+    Integer deleteAddress(String address_id);
+
+    /**
+     * 查询该用户的所有地址
+     *
+     * @param user_id 用户id
+     * @return
+     */
+    ArrayList selAddress(String user_id);
 }
