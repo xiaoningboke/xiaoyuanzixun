@@ -2,6 +2,7 @@ package com.sunxiaoning.xiaoyuanfuwu.api.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * 商品业务逻辑接口类
@@ -24,7 +25,7 @@ public interface GoodsMessageService {
      * @param shop 查询条件
      * @return
      */
-    HashMap<String, Object> selGoods(String shop);
+    List selGoods(String shop);
 
     /**
      * 添加商品的评论

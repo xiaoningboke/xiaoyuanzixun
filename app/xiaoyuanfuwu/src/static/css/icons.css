@@ -1,0 +1,14 @@
+@font-face {
+    font-family: 'iconfont';  /* project id 629385 */
+    src: url('//at.alicdn.com/t/font_642698_uz15n6ovlapmbo6r.ttf') format('truetype');
+}
+
+[class^="icon-custom-"]:before, [class*=" icon-custom-"]:before {
+    font-family: 'iconfont' !important;
+}
+
+.icon-custom-date:before { /*日期*/
+    content: '\e629';
+}
+
+

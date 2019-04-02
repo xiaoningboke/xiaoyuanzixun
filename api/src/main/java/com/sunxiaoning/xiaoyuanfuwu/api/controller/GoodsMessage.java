@@ -25,6 +25,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 @Api("商品管理")
 @RestController
@@ -105,10 +106,11 @@ public class GoodsMessage extends BaseController {
             goods.put("state", state);
             goods.put("classify", classify);
             goods.put("content", content);
-            ArrayList pictures = new ArrayList<String>(Arrays.asList(pic.split(",")));
-            ArrayList piclist = FileTools.saveBase64Images(pictures);
-            String pics = StringUtils.join(piclist, ',');
-            goods.put("pic", pics);
+          /*  ArrayList pictures = new ArrayList<String>(Arrays.asList(pic.split(",")));*/
+            String picture = FileTools.saveBase64Image(pic);
+            //ArrayList piclist = FileTools.saveBase64Images(pic);
+            //String pics = StringUtils.join(piclist, ',');
+            goods.put("pic", picture);
             Integer f = goodsMessageService.addGoods(goods);
             if (f > 0) {
                 return this.success("添加成功");
@@ -136,27 +138,34 @@ public class GoodsMessage extends BaseController {
     ) {
 
         logger.info("================= 查询商品接口 =================");
-        HashMap<String, Object> goods = goodsMessageService.selGoods(shop);
-
-        if (goods != null) {
+        List goodslist = goodsMessageService.selGoods(shop);
+        if (goodslist.size() == 0) {
+            return this.fail("暂无商品");
+        }
+        for (int i = 0; i < goodslist.size(); i++) {
+            HashMap<String, Object> goods = (HashMap) goodslist.get(i);
             //格式化图片
-            if (goods.get("pic") != null && goods.get("pic").toString().length() > 0) {
+            /*if (goods.get("pic") != null && goods.get("pic").toString().length() > 0) {
                 String[] picArr = goods.get("pic").toString().split(",");
                 StringBuffer picStr = new StringBuffer();
-                for (int i = 0; i < picArr.length; i++) {
-                    if (i == 0) {
-                        picStr.append(filePath + picArr[i]);
+                for (int j = 0; j < picArr.length; j++) {
+                    if (j == 0) {
+                        picStr.append(filePath + picArr[j]);
                     } else {
-                        picStr.append("," + filePath + picArr[i]);
+                        picStr.append("," + filePath + picArr[j]);
                     }
                 }
                 String pic = picStr.toString();
                 goods.put("pic", pic);
+            }*/
+            if (goods.get("pic") != null && goods.get("pic").toString().length() > 0) {
+                goods.put("pic", filePath + goods.get("pic"));
+            } else {
+                goods.put("pic", "");
             }
-            return this.success(goods);
-        } else {
-            return this.fail("暂无商品");
+
         }
+        return this.success(goodslist);
     }
 
     /**
@@ -170,7 +179,7 @@ public class GoodsMessage extends BaseController {
             @ApiImplicitParam(name = "goods_id", value = "商品的id", required = true, dataType = "String")
     })
     @RequestMapping(value = "/goodsmessage")
-    public APIResponse login(@RequestParam(value = "goods_id", defaultValue = "") String goods_id /*商品的id*/
+    public APIResponse goodsmessage(@RequestParam(value = "goods_id", defaultValue = "") String goods_id /*商品的id*/
     ) {
 
         logger.info("================= 查询商品详情信息接口 =================");

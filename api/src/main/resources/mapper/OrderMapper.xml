@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sunxiaoning.xiaoyuanfuwu.api.dao.OrderDao">
+
+    <!--添加订单信息-->
+    <insert id="addOrder">
+      insert into xyfw_order (order_id,order_status, goods_id, buyer_id, seller_id, delivery_type,delivery_status,remark,goods_num,goods_price,goods_money,address_id,express,create_time)
+      values (#{order_id},#{order_status}, #{goods_id}, #{buyer_id}, #{seller_id}, #{delivery_type},#{delivery_status},#{remark},#{goods_num},#{goods_price},#{goods_money},#{address_id},#{express},#{create_time})
+    </insert>
+
+    <!--查询该订单是否属于该用户-->
+    <select id="findOrderByUid" resultType="hashmap">
+        select * from xyfw_order
+        where 1=1
+        <if test="order_id != null and order_id != ''">
+            and order_id = #{order_id}
+        </if>
+        <if test="user_id != null and user_id != ''">
+            and buyer_id = #{user_id}
+        </if>
+        limit 1
+    </select>
+
+    <!--更新订单状态-->
+    <update id="updateOrderStatus">
+        update xyfw_order set
+        <if test="order_status != null and order_status != ''">
+            order_status = #{order_status}
+        </if>
+        where order_id = #{order_id}
+    </update>
+</mapper>

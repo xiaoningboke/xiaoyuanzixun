@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 
 /**
@@ -24,7 +25,7 @@ public interface GoodsMessageDao {
             @Param("content") String content
     );
 
-    HashMap<String, Object> selGoods(@Param("shop") String shop);
+    List selGoods(@Param("shop") String shop);
 
     Integer addComment(
             @Param("assess_id") String assess_id,
