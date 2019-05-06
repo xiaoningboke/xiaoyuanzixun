@@ -76,4 +76,54 @@ public interface GoodsMessageService {
      * @return
      */
     Integer updateState(String goods_id, int state);
+
+    /**
+     * 收藏该商品
+     *
+     * @param collect
+     * @return
+     */
+    Integer addCollect(HashMap<String, Object> collect);
+
+    /**
+     * 查询该人的收藏列表
+     *
+     * @param user_id
+     * @return
+     */
+    List collectListId(String user_id);
+
+    /**
+     * 取消关注
+     *
+     * @param user_id
+     * @param goods_id
+     * @return
+     */
+    Integer delCollect(String user_id, String goods_id);
+
+    /**
+     * 加入购物车
+     *
+     * @param shoppingcart
+     * @return
+     */
+    Integer addShoppingcart(HashMap<String, Object> shoppingcart);
+
+    /**
+     * 购物车列表
+     *
+     * @param user_id
+     * @return
+     */
+    List shoppingcartList(String user_id);
+
+    /**
+     * 取消购物车
+     *
+     * @param user_id
+     * @param goods_id
+     * @return
+     */
+    Integer delShoppingcart(String user_id, String goods_id);
 }

@@ -14,7 +14,8 @@ module.exports = {
     proxy: {
       '/api': {
         // 目标 API 地址
-        target: 'http://192.168.1.139:8090/api/', //接口地址
+        target: 'http://192.168.1.108:8090/api/', //接口地址
+        //target: 'http://192.168.0.46:8090/api/', //接口地址
         changeOrigin: true,
         pathRewrite: {
           '^/api': '/' //这里的名称就是一个代理名称，叫什么都可以，具体通过API调用的时候，会将这个名字进行替换，

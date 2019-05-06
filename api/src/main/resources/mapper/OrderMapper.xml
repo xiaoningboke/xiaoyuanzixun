@@ -4,8 +4,8 @@
 
     <!--添加订单信息-->
     <insert id="addOrder">
-      insert into xyfw_order (order_id,order_status, goods_id, buyer_id, seller_id, delivery_type,delivery_status,remark,goods_num,goods_price,goods_money,address_id,express,create_time)
-      values (#{order_id},#{order_status}, #{goods_id}, #{buyer_id}, #{seller_id}, #{delivery_type},#{delivery_status},#{remark},#{goods_num},#{goods_price},#{goods_money},#{address_id},#{express},#{create_time})
+      insert into xyfw_order (order_id,order_status, goods_id, buyer_id, seller_id, delivery_status,remark,goods_num,goods_price,goods_money,address_id,create_time)
+      values (#{order_id},#{order_status}, #{goods_id}, #{buyer_id}, #{seller_id},#{delivery_status},#{remark},#{goods_num},#{goods_price},#{goods_money},#{address_id},#{create_time})
     </insert>
 
     <!--查询该订单是否属于该用户-->

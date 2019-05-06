@@ -2,6 +2,7 @@ package com.sunxiaoning.xiaoyuanfuwu.api.service.impl;
 
 import com.sunxiaoning.xiaoyuanfuwu.api.dao.GoodsMessageDao;
 import com.sunxiaoning.xiaoyuanfuwu.api.service.GoodsMessageService;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -87,5 +88,84 @@ public class GoodsMessageServiceImpl implements GoodsMessageService {
     public Integer updateState(String goods_id, int state) {
         return goodsMessageDao.updateState(goods_id, state);
     }
+
+    /**
+     * 添加收藏
+     *
+     * @param collect
+     * @return
+     */
+    @Override
+    public Integer addCollect(HashMap<String, Object> collect) {
+        return goodsMessageDao.addCollect(
+                collect.get("collect_id").toString(),
+                collect.get("goods_id").toString(),
+                collect.get("user_id").toString(),
+                collect.get("create_time").toString()
+        );
+    }
+
+    /**
+     * 收藏的列表
+     *
+     * @param user_id
+     * @return
+     */
+    @Override
+    public List collectListId(String user_id) {
+        return goodsMessageDao.collectListId(user_id);
+    }
+
+    /**
+     * 取消关注
+     *
+     * @param user_id
+     * @param goods_id
+     * @return
+     */
+    @Override
+    public Integer delCollect(String user_id, String goods_id) {
+        return goodsMessageDao.delCollect(user_id, goods_id);
+    }
+
+    /**
+     * 加入到购物车
+     *
+     * @param shoppingcart
+     * @return
+     */
+    @Override
+    public Integer addShoppingcart(HashMap<String, Object> shoppingcart) {
+        return goodsMessageDao.addShoppingcart(
+                shoppingcart.get("shoppingcart_id").toString(),
+                shoppingcart.get("goods_id").toString(),
+                shoppingcart.get("user_id").toString(),
+                shoppingcart.get("create_time").toString()
+        );
+    }
+
+    /**
+     * 获取购物车列表
+     *
+     * @param user_id
+     * @return
+     */
+    @Override
+    public List shoppingcartList(String user_id) {
+        return goodsMessageDao.shoppingcartList(user_id);
+    }
+
+    /**
+     * 取消购物车
+     *
+     * @param user_id
+     * @param goods_id
+     * @return
+     */
+    @Override
+    public Integer delShoppingcart(String user_id, String goods_id) {
+        return goodsMessageDao.delShoppingcart(user_id, goods_id);
+    }
+
 
 }

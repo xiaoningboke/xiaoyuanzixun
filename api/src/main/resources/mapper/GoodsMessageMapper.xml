@@ -29,20 +29,22 @@
 
     <!--查询商品的详细信息-->
     <select id="findGoods" resultType="hashmap">
-        select * from xyfw_goods
+        select * from xyfw_goods g
+        left join xyfw_user u on g.user_id = u.user_id
         where 1=1
         <if test="goods_id != null and goods_id != ''">
-            and goods_id = #{goods_id}
+            and g.goods_id = #{goods_id}
         </if>
     </select>
 
     <!--查询所有该产品的所有评论-->
     <select id="selAssess" resultType="hashmap">
-        select assess_id,content as gacontent,pic as gapic from xyfw_goodsassess
+        select assess_id,content as gacontent,pic as gapic ,assess_time,assess_username from xyfw_goodsassess
         where 1=1
         <if test="goods_id != null and goods_id != ''">
             and goods_id = #{goods_id}
         </if>
+        order by assess_time desc
     </select>
 
     <!--查询该产品是不是该用户发布的-->
@@ -96,4 +98,45 @@
         </if>
         where goods_id = #{goods_id}
     </update>
+
+    <!--插入收藏-->
+    <insert id="addCollect">
+      insert into xyfw_collect (collect_id,goods_id, user_id, create_time )
+      values (#{collect_id},#{goods_id}, #{user_id},#{create_time})
+    </insert>
+
+    <!--查询收藏的id-->
+    <select id="collectListId" resultType="hashmap">
+        select goods_id from xyfw_collect
+        where 1=1
+        <if test="user_id != null and user_id != ''">
+            and user_id = #{user_id}
+        </if>
+    </select>
+
+    <!--删除收藏-->
+    <delete id="delCollect">
+        delete from xyfw_collect where user_id = #{user_id} and goods_id = #{goods_id}
+    </delete>
+
+    <!--添加到购物车-->
+    <insert id="addShoppingcart">
+      insert into xyfw_shoppingcart (sc_id,goods_id, user_id, create_time )
+      values (#{shoppingcart_id},#{goods_id}, #{user_id},#{create_time})
+    </insert>
+
+    <!--查询购物车-->
+    <select id="shoppingcartList" resultType="hashmap">
+        select s.*,g.* from xyfw_shoppingcart s
+        left join xyfw_goods g on s.goods_id = g.goods_id
+        where 1=1
+        <if test="user_id != null and user_id != ''">
+            and s.user_id = #{user_id}
+        </if>
+    </select>
+
+    <!--删除购物车-->
+    <delete id="delShoppingcart">
+        delete from xyfw_shoppingcart where user_id = #{user_id} and goods_id = #{goods_id}
+    </delete>
 </mapper>

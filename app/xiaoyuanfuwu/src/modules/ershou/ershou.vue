@@ -2,7 +2,7 @@
   <yd-layout>
     <!--导航栏-->
     <yd-navbar title="二手交易" bgcolor="#3AB07E" color="#FFF">
-      <router-link to="#" slot="right" @click.native="onPressPush('addgoods')">
+      <router-link to="#" slot="right" @click.native="addGoods()">
         <yd-icon name="feedback" size="25px" color="#FFF"></yd-icon>
       </router-link>
     </yd-navbar>
@@ -51,6 +51,7 @@ export default {
   props: [],
   data: function() {
     return {
+      token: window.localStorage.getItem('token'),
       //广告轮播
       advert: [
         {
@@ -91,6 +92,15 @@ export default {
 
   activated: function() {},
   methods: {
+    //发布商品
+    addGoods() {
+      if (this.token == '' || this.token == null) {
+        this.$showError('请先登录');
+        this.$pushRoute('login');
+      } else {
+        this.onPressPush('addgoods');
+      }
+    },
     onPressPush(rou, params) {
       window.localStorage.setItem('goods_id', params);
       this.$pushRoute(rou);

@@ -5,10 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.sunxiaoning.xiaoyuanfuwu.api.service.GoodsMessageService;
 import com.sunxiaoning.xiaoyuanfuwu.common.controller.BaseController;
 import com.sunxiaoning.xiaoyuanfuwu.common.model.APIResponse;
-import com.sunxiaoning.xiaoyuanfuwu.tools.Common;
-import com.sunxiaoning.xiaoyuanfuwu.tools.FileTools;
-import com.sunxiaoning.xiaoyuanfuwu.tools.JwtTools;
-import com.sunxiaoning.xiaoyuanfuwu.tools.PropertiesTools;
+import com.sunxiaoning.xiaoyuanfuwu.tools.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -106,7 +103,7 @@ public class GoodsMessage extends BaseController {
             goods.put("state", state);
             goods.put("classify", classify);
             goods.put("content", content);
-          /*  ArrayList pictures = new ArrayList<String>(Arrays.asList(pic.split(",")));*/
+            /*  ArrayList pictures = new ArrayList<String>(Arrays.asList(pic.split(",")));*/
             String picture = FileTools.saveBase64Image(pic);
             //ArrayList piclist = FileTools.saveBase64Images(pic);
             //String pics = StringUtils.join(piclist, ',');
@@ -411,4 +408,211 @@ public class GoodsMessage extends BaseController {
             return this.fail("添加失败");
         }
     }
+
+    @ApiOperation(value = "添加收藏", notes = "")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "token", value = "token", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "goods_id", value = "商品id", required = true, dataType = "String")
+    })
+    @RequestMapping(value = "/addcollect")
+    public APIResponse addCollect(@RequestParam(value = "token") String token, /* token */
+                                  @RequestParam(value = "goods_id") String goods_id /* 商品id */
+    ) {
+
+        logger.info("================= 收藏接口 =================");
+
+        if (!Common.validString(token)) {
+            return this.fail("请先进行登录");
+        }
+        if (!Common.validString(token)) {
+            return this.fail("用户凭证错误");
+        }
+
+        String tokenParsed = JwtTools.parseToken(token);
+        if (tokenParsed == null) {
+            return this.fail("用户凭证错误");
+        }
+        JSONObject tokenUser = JSON.parseObject(tokenParsed);
+        String user_id = tokenUser.getString("user_id");
+
+
+        HashMap<String, Object> collect = new HashMap<>();
+        String collect_id = Common.UUID(); //生成收藏的id
+        collect.put("collect_id", collect_id);
+        collect.put("goods_id", goods_id);
+        collect.put("user_id", user_id);
+        collect.put("create_time", DateTools.timesNow());
+        Integer f = goodsMessageService.addCollect(collect);
+        if (f > 0) {
+            return this.success("收藏成功");
+        } else {
+            return this.fail("收藏失败");
+        }
+    }
+
+    @ApiOperation(value = "收藏列表", notes = "")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "token", value = "token", required = true, dataType = "String")
+    })
+    @RequestMapping(value = "/collectlist")
+    public APIResponse collectList(@RequestParam(value = "token") String token /* token */) {
+
+        logger.info("================= 收藏列表接口 =================");
+
+        if (!Common.validString(token)) {
+            return this.fail("请先进行登录");
+        }
+        if (!Common.validString(token)) {
+            return this.fail("用户凭证错误");
+        }
+
+        String tokenParsed = JwtTools.parseToken(token);
+        if (tokenParsed == null) {
+            return this.fail("用户凭证错误");
+        }
+        JSONObject tokenUser = JSON.parseObject(tokenParsed);
+        String user_id = tokenUser.getString("user_id");
+
+
+        List collect = goodsMessageService.collectListId(user_id);
+        return this.success(collect);
+
+    }
+
+
+    @ApiOperation(value = "取消收藏", notes = "")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "token", value = "token", required = true, dataType = "String")
+    })
+    @RequestMapping(value = "/delcollect")
+    public APIResponse delCollect(@RequestParam(value = "token") String token, /* token */
+                                  @RequestParam(value = "goods_id") String goods_id /* token */) {
+
+        logger.info("================= 取消收藏  =================");
+
+        if (!Common.validString(token)) {
+            return this.fail("请先进行登录");
+        }
+        if (!Common.validString(token)) {
+            return this.fail("用户凭证错误");
+        }
+
+        String tokenParsed = JwtTools.parseToken(token);
+        if (tokenParsed == null) {
+            return this.fail("用户凭证错误");
+        }
+        JSONObject tokenUser = JSON.parseObject(tokenParsed);
+        String user_id = tokenUser.getString("user_id");
+
+
+        Integer i = goodsMessageService.delCollect(user_id, goods_id);
+        return this.success("取消成功");
+
+    }
+
+
+    @ApiOperation(value = "加入购物车", notes = "")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "token", value = "token", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "goods_id", value = "商品id", required = true, dataType = "String")
+    })
+    @RequestMapping(value = "/addshoppingcart")
+    public APIResponse addShoppingcart(@RequestParam(value = "token") String token, /* token */
+                                       @RequestParam(value = "goods_id") String goods_id /* 商品id */
+    ) {
+
+        logger.info("================= 加入购物车 =================");
+
+        if (!Common.validString(token)) {
+            return this.fail("请先进行登录");
+        }
+        if (!Common.validString(token)) {
+            return this.fail("用户凭证错误");
+        }
+
+        String tokenParsed = JwtTools.parseToken(token);
+        if (tokenParsed == null) {
+            return this.fail("用户凭证错误");
+        }
+        JSONObject tokenUser = JSON.parseObject(tokenParsed);
+        String user_id = tokenUser.getString("user_id");
+
+
+        HashMap<String, Object> collect = new HashMap<>();
+        String shoppingcart_id = Common.UUID(); //生成购物车的id
+        collect.put("shoppingcart_id", shoppingcart_id);
+        collect.put("goods_id", goods_id);
+        collect.put("user_id", user_id);
+        collect.put("create_time", DateTools.timesNow());
+        Integer f = goodsMessageService.addShoppingcart(collect);
+        if (f > 0) {
+            return this.success("添加成功");
+        } else {
+            return this.fail("添加失败");
+        }
+    }
+
+    @RequestMapping(value = "/shoppingcartlist")
+    public APIResponse shoppingcartList(@RequestParam(value = "token") String token /* token */) {
+
+        logger.info("================= 获取购物车列表 =================");
+
+        if (!Common.validString(token)) {
+            return this.fail("请先进行登录");
+        }
+        if (!Common.validString(token)) {
+            return this.fail("用户凭证错误");
+        }
+
+        String tokenParsed = JwtTools.parseToken(token);
+        if (tokenParsed == null) {
+            return this.fail("用户凭证错误");
+        }
+        JSONObject tokenUser = JSON.parseObject(tokenParsed);
+        String user_id = tokenUser.getString("user_id");
+
+
+        List sc = goodsMessageService.shoppingcartList(user_id);
+        for (int i = 0; i < sc.size(); i++) {
+            HashMap<String, Object> h = (HashMap) sc.get(i);
+            //格式化图片
+            if (h.get("pic") != null && h.get("pic").toString().length() > 0) {
+                String pic = filePath+h.get("pic").toString();
+                h.put("pic", pic);
+            }
+        }
+        return this.success(sc);
+
+    }
+
+    @ApiOperation(value = "取消购物车", notes = "")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "token", value = "token", required = true, dataType = "String")
+    })
+    @RequestMapping(value = "/delshoppingcart")
+    public APIResponse delShoppingcart(@RequestParam(value = "token") String token, /* token */
+                                       @RequestParam(value = "goods_id") String goods_id /* token */) {
+
+        logger.info("================= 取消收藏  =================");
+
+        if (!Common.validString(token)) {
+            return this.fail("请先进行登录");
+        }
+        if (!Common.validString(token)) {
+            return this.fail("用户凭证错误");
+        }
+
+        String tokenParsed = JwtTools.parseToken(token);
+        if (tokenParsed == null) {
+            return this.fail("用户凭证错误");
+        }
+        JSONObject tokenUser = JSON.parseObject(tokenParsed);
+        String user_id = tokenUser.getString("user_id");
+
+
+        Integer i = goodsMessageService.delShoppingcart(user_id, goods_id);
+        return this.success("取消成功");
+
+    }
+
 }

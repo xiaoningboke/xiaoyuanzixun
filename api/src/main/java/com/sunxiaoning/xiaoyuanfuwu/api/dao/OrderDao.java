@@ -18,14 +18,12 @@ public interface OrderDao {
      * @param goods_id
      * @param buyer_id
      * @param seller_id
-     * @param delivery_type
      * @param delivery_status
      * @param remark
      * @param goods_num
      * @param goods_price
      * @param goods_money
      * @param address_id
-     * @param express
      * @return
      */
     Integer addOrder(
@@ -34,14 +32,12 @@ public interface OrderDao {
             @Param("goods_id") String goods_id,
             @Param("buyer_id") String buyer_id,
             @Param("seller_id") String seller_id,
-            @Param("delivery_type") String delivery_type,
             @Param("delivery_status") String delivery_status,
             @Param("remark") String remark,
             @Param("goods_num") String goods_num,
             @Param("goods_price") String goods_price,
             @Param("goods_money") String goods_money,
             @Param("address_id") String address_id,
-            @Param("express") String express,
             @Param("create_time") String create_time
     );
 

@@ -1,5 +1,7 @@
 package com.sunxiaoning.xiaoyuanfuwu.api.service;
 
+import io.swagger.models.auth.In;
+
 import java.util.HashMap;
 
 /**
@@ -34,4 +36,5 @@ public interface OrderService {
      * @return
      */
     Integer updateOrderStatus(String order_id, String order_status);
+
 }

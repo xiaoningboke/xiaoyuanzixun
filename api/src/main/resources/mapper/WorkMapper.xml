@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sunxiaoning.xiaoyuanfuwu.api.dao.WorkDao">
+
+
+    <!--添加招聘兼职信息-->
+    <insert id="addWork">
+      insert into xyfw_work (work_id,user_id, work_name, work_number, work_money, work_unit,work_start_time,work_end_time,work_content,work_type,work_user,work_phone,work_pic)
+      values (#{work_id},#{user_id}, #{work_name}, #{work_number}, #{work_money}, #{work_unit},#{work_start_time},#{work_end_time},#{work_content},#{work_type},#{work_user},#{work_phone},#{work_pic})
+    </insert>
+
+
+</mapper>

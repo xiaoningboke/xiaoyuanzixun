@@ -138,12 +138,7 @@ export default {
     };
   },
   computed: {},
-  created: function() {
-    if (this.token == '' || this.token == null) {
-      this.$showError('请先登录');
-      this.$pushRoute('login');
-    }
-  },
+  created: function() {},
   mounted: function() {},
 
   activated: function() {},

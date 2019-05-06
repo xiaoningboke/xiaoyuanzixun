@@ -22,14 +22,12 @@ public class OrderServiceImpl implements OrderService {
                 order.get("goods_id").toString(),
                 order.get("buyer_id").toString(),
                 order.get("seller_id").toString(),
-                order.get("delivery_type").toString(),
                 order.get("delivery_status").toString(),
                 order.get("remark").toString(),
                 order.get("goods_num").toString(),
                 order.get("goods_price").toString(),
                 order.get("goods_money").toString(),
                 order.get("address_id").toString(),
-                order.get("express").toString(),
                 order.get("create_time").toString()
         );
     }

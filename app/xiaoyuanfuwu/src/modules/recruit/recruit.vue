@@ -2,9 +2,14 @@
   <yd-layout>
     <!--导航栏-->
     <yd-navbar title="兼职招聘" bgcolor="#3AB07E" color="#FFF">
-      <router-link to="#" slot="right">
-        <yd-icon name="feedback" size="25px" color="#FFF"></yd-icon>
-      </router-link>
+      <div to="#" slot="right">
+        <yd-icon
+          name="feedback"
+          size="25px"
+          color="#FFF"
+          @click.native="addrecruit"
+        ></yd-icon>
+      </div>
     </yd-navbar>
     <!--轮播图-->
     <yd-slider autoplay="3000">
@@ -58,6 +63,7 @@ export default {
   props: [],
   data: function() {
     return {
+      token: window.localStorage.getItem('token'),
       //广告轮播
       advert: [
         {
@@ -130,6 +136,14 @@ export default {
 
   activated: function() {},
   methods: {
+    addrecruit() {
+      if (this.token == '' || this.token == null) {
+        this.$showError('请先登录');
+        this.$pushRoute('login');
+      } else {
+        this.$pushRoute('addrecruit');
+      }
+    },
     onPressPush() {
       this.$pushRoute('recruitdetails');
     }

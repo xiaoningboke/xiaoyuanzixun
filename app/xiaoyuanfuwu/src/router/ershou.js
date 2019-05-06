@@ -22,6 +22,12 @@ const routes = [
     name: 'addgoods',
     component: resolve => require(['@/modules/ershou/addgoods.vue'], resolve),
     meta: { title: '发布产品' }
+  },
+  {
+    path: '/ershou/goumai',
+    name: 'goumai',
+    component: resolve => require(['@/modules/ershou/goumai.vue'], resolve),
+    meta: { title: '立即购买' }
   }
 ];
 export default routes;

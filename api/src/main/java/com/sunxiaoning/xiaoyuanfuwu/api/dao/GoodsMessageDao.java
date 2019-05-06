@@ -60,4 +60,33 @@ public interface GoodsMessageDao {
             @Param("goods_id") String goods_id,
             @Param("state") int state
     );
+
+    Integer addCollect(
+            @Param("collect_id") String collect_id,
+            @Param("goods_id") String goods_id,
+            @Param("user_id") String user_id,
+            @Param("create_time") String create_time
+    );
+
+    List collectListId(@Param("user_id") String user_id);
+
+    Integer delCollect(
+            @Param("user_id") String user_id,
+            @Param("goods_id") String goods_id
+    );
+
+
+    Integer addShoppingcart(
+            @Param("shoppingcart_id") String shoppingcart_id,
+            @Param("goods_id") String goods_id,
+            @Param("user_id") String user_id,
+            @Param("create_time") String create_time
+    );
+
+    List shoppingcartList(@Param("user_id") String user_id);
+
+    Integer delShoppingcart(
+            @Param("user_id") String user_id,
+            @Param("goods_id") String goods_id
+    );
 }

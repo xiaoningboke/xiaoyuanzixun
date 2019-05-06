@@ -34,28 +34,24 @@ public class Order extends BaseController {
             @ApiImplicitParam(name = "order_status", value = "订单项状态，0为已提交订单，1为取消订单", required = true, dataType = "String"),
             @ApiImplicitParam(name = "goods_id", value = "商品id", required = true, dataType = "String"),
             @ApiImplicitParam(name = "seller_id", value = "卖家id", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "delivery_type", value = "配送方式;0自己配送，1平台配送", required = true, dataType = "String"),
             @ApiImplicitParam(name = "delivery_status", value = "配送状态1待发货，2，运输中，3已收货，3换货，4退货中，5交易完成", required = true, dataType = "String"),
             @ApiImplicitParam(name = "remark", value = "备注", required = false, dataType = "String"),
             @ApiImplicitParam(name = "goods_num", value = "商品数量", required = true, dataType = "String"),
             @ApiImplicitParam(name = "goods_price", value = "商品单价", required = true, dataType = "String"),
             @ApiImplicitParam(name = "goods_money", value = "商品的总价", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "address_id", value = "收货地址id", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "express", value = "快递单号", required = false, dataType = "String")
+            @ApiImplicitParam(name = "address_id", value = "收货地址id", required = true, dataType = "String")
     })
     @RequestMapping(value = "/addorder")
     public APIResponse addOrder(@RequestParam(value = "token") String token, /* token */
                                 @RequestParam(value = "order_status") String order_status, /* 订单项状态，0为已提交订单，1为取消订单 */
                                 @RequestParam(value = "goods_id") String goods_id, /* 商品id */
                                 @RequestParam(value = "seller_id") String seller_id, /* 卖家id */
-                                @RequestParam(value = "delivery_type") String delivery_type, /* 配送方式;0自己配送，1平台配送 */
                                 @RequestParam(value = "delivery_status") String delivery_status, /* 配送状态1待发货，2，运输中，3已收货，3换货，4退货中，5交易完成 */
                                 @RequestParam(value = "remark") String remark, /* 备注 */
                                 @RequestParam(value = "goods_num") String goods_num, /* 商品数量 */
                                 @RequestParam(value = "goods_price") String goods_price, /* 商品单价 */
                                 @RequestParam(value = "goods_money") String goods_money, /* 商品的总价 */
-                                @RequestParam(value = "address_id") String address_id, /* 收货地址id */
-                                @RequestParam(value = "express") String express /* 快递单号 */
+                                @RequestParam(value = "address_id") String address_id /* 收货地址id */
     ) {
 
         logger.info("================= 添加订单接口 =================");
@@ -82,14 +78,12 @@ public class Order extends BaseController {
         order.put("goods_id", goods_id);
         order.put("buyer_id", user_id);
         order.put("seller_id", seller_id);
-        order.put("delivery_type", delivery_type);
         order.put("delivery_status", delivery_status);
         order.put("remark", remark);
         order.put("goods_num", goods_num);
         order.put("goods_price", goods_price);
         order.put("goods_money", goods_money);
         order.put("address_id", address_id);
-        order.put("express", express);
         order.put("create_time", DateTools.timesNow());
 
         Integer f = orderService.addOrder(order);
@@ -140,7 +134,5 @@ public class Order extends BaseController {
         } else {
             return this.fail("修改失败");
         }
-
-
     }
 }

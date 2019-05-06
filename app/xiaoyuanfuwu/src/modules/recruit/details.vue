@@ -15,33 +15,37 @@
       </yd-navbar>
       <div style="height: 1rem;"></div>
       <!--顶部-->
-      <div style="font-weight: 600;padding: .2rem .3rem">
-        <div style="height: .6rem;line-height: .6rem;">
-          <span style="font-size: .4rem;width: 100%; ">
-            <span style="float:left;width: 70%">咨询热线/呼叫客服中心</span>
-            <span style="color: #028be6;float: right; width: 30%">3K-5K</span>
-          </span>
-          <span style="color: #999;font-size: .2rem">招聘信息</span>
-          <hr />
-        </div>
-      </div>
-      <!--联系人-->
-      <div>
-        <div style="float: left">
-          <img
+      <yd-preview :buttons="btns">
+        <yd-preview-header>
+          <div slot="left">兼职名称</div>
+          <div slot="right">大棚搭建</div>
+        </yd-preview-header>
 
-            src="http://img0.imgtn.bdimg.com/it/u=1449289102,354173276&fm=26&gp=0.jpg"
-            alt=""
-          />
-        </div>
-        <div></div>
-      </div>
-      <!--底部-->
-      <yd-tabbar slot="tabbar">
-        <yd-tabbar-item title="拨打电话">
-          <yd-icon name="phone2" slot="icon" size=".3rem"></yd-icon>
-        </yd-tabbar-item>
-      </yd-tabbar>
+        <yd-preview-item>
+          <div slot="left">人数</div>
+          <div slot="right">30人</div>
+        </yd-preview-item>
+        <yd-preview-item>
+          <div slot="left">工资</div>
+          <div slot="right">100元/天</div>
+        </yd-preview-item>
+        <yd-preview-item>
+          <div slot="left">开始时间</div>
+          <div slot="right">2019年11月</div>
+        </yd-preview-item>
+        <yd-preview-item>
+          <div slot="left">结束时间</div>
+          <div slot="right">
+            2019年12月
+          </div>
+        </yd-preview-item>
+        <yd-preview-item>
+          <div slot="left">工作描述</div>
+          <div slot="right">
+            工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述/天
+          </div>
+        </yd-preview-item>
+      </yd-preview>
     </template>
   </yd-layout>
 </template>
@@ -53,7 +57,20 @@ export default {
   props: [],
   data: function() {
     return {
-      radio: '1'
+      radio: '1',
+      btns: [
+        {
+          text: '辅助操作',
+          click: () => {
+            alert('点击咨询');
+          }
+        },
+        {
+          color: '#F00',
+          text: '我要报名',
+          link: { path: '/' }
+        }
+      ]
     };
   },
   computed: {},
