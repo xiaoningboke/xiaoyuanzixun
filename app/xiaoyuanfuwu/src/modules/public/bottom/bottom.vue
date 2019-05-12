@@ -25,7 +25,12 @@
     >
       <yd-icon name="order" slot="icon" size="0.54rem"></yd-icon>
     </yd-tabbar-item>
-    <yd-tabbar-item title="校园资讯" link="#">
+    <yd-tabbar-item
+      title="校园资讯"
+      link="#"
+      v-on:click.native="onPressPush('zixun')"
+      :active="zixun"
+    >
       <yd-icon name="discover" slot="icon" size="0.54rem"></yd-icon>
     </yd-tabbar-item>
     <yd-tabbar-item title="个人中心" link="#">
@@ -45,6 +50,9 @@ export default {
       type: Boolean
     },
     recruit: {
+      type: Boolean
+    },
+    zixun: {
       type: Boolean
     }
   },

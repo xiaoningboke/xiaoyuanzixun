@@ -14,7 +14,7 @@ module.exports = {
     proxy: {
       '/api': {
         // 目标 API 地址
-        target: 'http://192.168.1.108:8090/api/', //接口地址
+        target: 'http://192.168.56.1:8090/api/', //接口地址
         //target: 'http://192.168.0.46:8090/api/', //接口地址
         changeOrigin: true,
         pathRewrite: {

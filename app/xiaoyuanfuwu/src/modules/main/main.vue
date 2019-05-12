@@ -17,19 +17,35 @@
     <!--首页导航-->
     <yd-grids-group :rows="4" title="">
       <yd-grids-item>
-        <img slot="icon" src="http://static.ydcss.com/ydui/img/logo.png" />
+        <img
+          slot="icon"
+          src="http://static.ydcss.com/ydui/img/logo.png"
+          v-on:click.stop="onPressPush('ershou')"
+        />
         <span slot="text">二手交易</span>
       </yd-grids-item>
       <yd-grids-item>
-        <img slot="icon" src="http://static.ydcss.com/ydui/img/logo.png" />
+        <img
+          slot="icon"
+          src="http://static.ydcss.com/ydui/img/logo.png"
+          v-on:click.stop="onPressPush('recruit')"
+        />
         <span slot="text">短期兼职</span>
       </yd-grids-item>
       <yd-grids-item>
-        <img slot="icon" src="http://static.ydcss.com/ydui/img/logo.png" />
+        <img
+          slot="icon"
+          src="http://static.ydcss.com/ydui/img/logo.png"
+          v-on:click.stop="onPressPush('recruit')"
+        />
         <span slot="text">实习招聘</span>
       </yd-grids-item>
       <yd-grids-item>
-        <img slot="icon" src="http://static.ydcss.com/ydui/img/logo.png" />
+        <img
+          slot="icon"
+          src="http://static.ydcss.com/ydui/img/logo.png"
+          v-on:click.stop="onPressPush('shiwu')"
+        />
         <span slot="text">失物招领</span>
       </yd-grids-item>
       <yd-grids-item>
@@ -37,15 +53,27 @@
         <span slot="text">创业服务</span>
       </yd-grids-item>
       <yd-grids-item>
-        <img slot="icon" src="http://static.ydcss.com/ydui/img/logo.png" />
+        <img
+          slot="icon"
+          src="http://static.ydcss.com/ydui/img/logo.png"
+          v-on:click.stop="onPressPush('biaobaiqiang')"
+        />
         <span slot="text">表白墙</span>
       </yd-grids-item>
       <yd-grids-item>
-        <img slot="icon" src="http://static.ydcss.com/ydui/img/logo.png" />
+        <img
+          slot="icon"
+          src="http://static.ydcss.com/ydui/img/logo.png"
+          v-on:click.stop="onPressPush('shetuan')"
+        />
         <span slot="text">社团活动</span>
       </yd-grids-item>
       <yd-grids-item>
-        <img slot="icon" src="http://static.ydcss.com/ydui/img/logo.png" />
+        <img
+          slot="icon"
+          src="http://static.ydcss.com/ydui/img/logo.png"
+          v-on:click.stop="onPressPush('zixun')"
+        />
         <span slot="text">校园资讯</span>
       </yd-grids-item>
     </yd-grids-group>
@@ -63,19 +91,21 @@
     <h3>校园资讯</h3>
     <yd-list theme="4">
       <div
-        v-for="(item, key) in list"
+        v-for="(item, key) in zixun"
         :key="key"
-        v-on:click.stop="onPressPush('ershou', item.uid)"
+        v-on:click.stop="onPressPush('news', item.news_id)"
       >
         <yd-list-item>
-          <img slot="img" :src="item.img" />
-          <span slot="title">{{ item.title }}</span>
+          <img slot="img" :src="item.new_pic" />
+          <span slot="title">{{ item.news_title }}</span>
           <yd-list-other slot="other">
             <div>
               <span class="demo-list-price"
-                ><em>发布者：</em>{{ item.price }}</span
+                ><em>发布者：</em>{{ item.news_user }}</span
               >
-              <span class="demo-list-del-price">简介：{{ item.w_price }}</span>
+              <span class="demo-list-del-price"
+                >时间：{{ item.news_time }}</span
+              >
             </div>
             <div>content</div>
           </yd-list-other>
@@ -91,6 +121,8 @@
 </template>
 
 <script>
+import { selnews } from '../../components/rest-api/APIKeys';
+
 export default {
   name: 'DemoNews',
   components: {},
@@ -132,59 +164,28 @@ export default {
         }
       ],
       //资讯列表
-      list: [
-        {
-          uid: 1212,
-          img: '//img1.shikee.com/try/2016/06/23/14381920926024616259.jpg',
-          title: '标题111标题标题标题标题',
-          price: 156.23,
-          w_price: 89.36
-        },
-        {
-          uid: 1212,
-          img: '//img1.shikee.com/try/2016/06/21/10172020923917672923.jpg',
-          title: '标题222标题标题标题标题',
-          price: 256.23,
-          w_price: 89.36
-        },
-        {
-          uid: 1212,
-          img: '//img1.shikee.com/try/2016/06/23/15395220917905380014.jpg',
-          title: '标题333标题标题标题标题',
-          price: 356.23,
-          w_price: 89.36
-        },
-        {
-          uid: 1212,
-          img: '//img1.shikee.com/try/2016/06/25/14244120933639105658.jpg',
-          title: '标题444标题标题标题标题',
-          price: 456.23,
-          w_price: 89.36
-        },
-        {
-          uid: 1212,
-          img: '//img1.shikee.com/try/2016/06/26/12365720933909085511.jpg',
-          title: '标题555标题标题标题标题',
-          price: 556.23,
-          w_price: 89.36
-        },
-        {
-          uid: 1212,
-          img: '//img1.shikee.com/try/2016/06/19/09430120929215230041.jpg',
-          title: '标题666标题标题标题标题',
-          price: 656.23,
-          w_price: 89.36
-        }
-      ]
+      zixun: []
     };
   },
   computed: {},
-  created: function() {},
+  created: function() {
+    let jsonData = {};
+    this.$post(selnews, jsonData).then(res => {
+      this.$showDialog(true);
+      if (res.errno == 0) {
+        this.$showDialog(false);
+        this.zixun = res.data;
+      } else {
+        this.$showError(res.errmsg);
+      }
+    });
+  },
   mounted: function() {},
 
   activated: function() {},
   methods: {
     onPressPush(route, params = {}) {
+      window.localStorage.setItem('params', params);
       this.$pushRoute(route, params);
     }
   }

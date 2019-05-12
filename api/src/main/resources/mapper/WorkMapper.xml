@@ -9,5 +9,29 @@
       values (#{work_id},#{user_id}, #{work_name}, #{work_number}, #{work_money}, #{work_unit},#{work_start_time},#{work_end_time},#{work_content},#{work_type},#{work_user},#{work_phone},#{work_pic})
     </insert>
 
+    <!--查询兼职/招聘-->
+    <select id="selWork" resultType="hashmap">
+        select * from xyfw_work
+        where 1=1
+        <if test="work_type != null and work_type != ''">
+            and work_type = #{work_type}
+        </if>
+        order by work_start_time desc
+    </select>
+    <!--兼职招聘的详情-->
+    <select id="findWork" resultType="hashmap">
+        select * from xyfw_work
+        where 1=1
+        <if test="work_id != null and work_id != ''">
+            and work_id = #{work_id}
+        </if>
+        limit 1
+    </select>
 
+    <!--报名-->
+    <insert id="baoMing">
+      insert into xyfw_user_work (user_work_id,user_id, work_id, user_work_state)
+      values (#{user_work_id},#{user_id}, #{work_id}, #{user_work_state})
+    </insert>
 </mapper>
+

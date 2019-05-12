@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 
 
 @Service
@@ -33,6 +34,26 @@ public class WorkServiceImpl implements WorkService {
                 work.get("work_user").toString(),
                 work.get("work_phone").toString(),
                 work.get("work_pic").toString()
+        );
+    }
+
+    @Override
+    public List selWork(Integer work_type) {
+        return workDao.selWork(work_type);
+    }
+
+    @Override
+    public HashMap findWork(String work_id) {
+        return workDao.findWork(work_id);
+    }
+
+    @Override
+    public Integer baoMing(HashMap userwork) {
+        return workDao.baoMing(
+                userwork.get("user_work_id").toString(),
+                userwork.get("user_id").toString(),
+                userwork.get("work_id").toString(),
+                userwork.get("user_work_state").toString()
         );
     }
 }

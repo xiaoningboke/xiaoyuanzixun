@@ -18,31 +18,31 @@
       <yd-preview :buttons="btns">
         <yd-preview-header>
           <div slot="left">兼职名称</div>
-          <div slot="right">大棚搭建</div>
+          <div slot="right">{{ message.work_name }}</div>
         </yd-preview-header>
 
         <yd-preview-item>
           <div slot="left">人数</div>
-          <div slot="right">30人</div>
+          <div slot="right">{{ message.work_number }}人</div>
         </yd-preview-item>
         <yd-preview-item>
           <div slot="left">工资</div>
-          <div slot="right">100元/天</div>
+          <div slot="right">{{ message.work_money }}</div>
         </yd-preview-item>
         <yd-preview-item>
           <div slot="left">开始时间</div>
-          <div slot="right">2019年11月</div>
+          <div slot="right">{{ message.work_start_time }}</div>
         </yd-preview-item>
         <yd-preview-item>
           <div slot="left">结束时间</div>
           <div slot="right">
-            2019年12月
+            {{ message.work_end_time }}
           </div>
         </yd-preview-item>
         <yd-preview-item>
           <div slot="left">工作描述</div>
           <div slot="right">
-            工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述工作描述/天
+            {{ message.work_content }}
           </div>
         </yd-preview-item>
       </yd-preview>
@@ -51,30 +51,50 @@
 </template>
 
 <script>
+import { findwork, baoming } from '../../components/rest-api/APIKeys';
+
 export default {
   name: 'Recruit',
   components: {},
   props: [],
   data: function() {
     return {
+      token: window.localStorage.getItem('token'),
+      work_id: window.localStorage.getItem('work_id'),
+      message: null,
       radio: '1',
       btns: [
         {
-          text: '辅助操作',
+          text: '返回',
           click: () => {
-            alert('点击咨询');
+            this.onPop();
           }
         },
         {
           color: '#F00',
           text: '我要报名',
-          link: { path: '/' }
+          click: () => {
+            this.baoming();
+          }
         }
       ]
     };
   },
   computed: {},
-  created: function() {},
+  created: function() {
+    let jsonData = {
+      work_id: this.work_id
+    };
+    this.$post(findwork, jsonData).then(res => {
+      this.$showDialog(true);
+      if (res.errno == 0) {
+        this.$showDialog(false);
+        this.message = res.data;
+      } else {
+        this.$showError(res.errmsg);
+      }
+    });
+  },
   mounted: function() {},
 
   activated: function() {
@@ -83,6 +103,26 @@ export default {
     //            }
   },
   methods: {
+    baoming(token = (this.token = this.work_id)) {
+      let jsonData = {
+        work_id: this.message.work_id,
+        token: token
+      };
+      this.$post(baoming, jsonData).then(res => {
+        this.$showDialog(true);
+        if (res.errno == 0) {
+          this.$showDialog(false);
+          this.$dialog.toast({
+            mes: '报名成功',
+            timeout: 1500,
+            icon: 'success'
+          });
+          this.onPop();
+        } else {
+          this.$showError(res.errmsg);
+        }
+      });
+    },
     onPop() {
       this.$pop();
     },

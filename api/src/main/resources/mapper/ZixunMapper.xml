@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sunxiaoning.xiaoyuanfuwu.api.dao.ZixunDao">
+
+
+    <!--添加招聘兼职信息-->
+    <insert id="addZixun">
+      insert into xyfw_news (news_id,news_title,news_user_id, news_user, news_time, news_exit_time, news_classify,news_con,new_pic)
+      values (#{news_id},#{news_title},#{news_user_id}, #{news_user}, #{news_time}, #{news_exit_time}, #{news_classify},#{news_con},#{new_pic})
+    </insert>
+
+    <!--查询兼职/招聘-->
+    <select id="selZixun" resultType="hashmap">
+        select * from xyfw_news
+        where 1=1
+        <if test="news_classify != null and news_classify != ''">
+            and news_classify = #{news_classify}
+        </if>
+        order by news_time desc
+    </select>
+    <!--兼职招聘的详情-->
+    <select id="findNews" resultType="hashmap">
+        select * from xyfw_news
+        where 1=1
+        <if test="news_id != null and news_id != ''">
+            and news_id = #{news_id}
+        </if>
+        limit 1
+    </select>
+
+    <!--报名-->
+    <insert id="addShiwu">
+      insert into xyfw_lost (lost_id,lost_user, lost_user_id, lost_time,lost_con)
+      values (#{lost_id},#{lost_user}, #{lost_user_id}, #{lost_time},#{lost_con})
+    </insert>
+
+    <select id="selShiwu" resultType="hashmap">
+        select * from xyfw_lost
+        order by lost_time desc
+    </select>
+
+    <select id="findShiwu" resultType="hashmap">
+        select * from xyfw_lost
+        where 1=1
+        <if test="lost_id != null and lost_id != ''">
+            and lost_id = #{lost_id}
+        </if>
+        limit 1
+    </select>
+
+    <update id="lingqu">
+        update xyfw_lost set
+        lost_state =
+        1,lost_owner_id=#{lost_owner_id},lost_owner=#{lost_owner},lost_receive_time=#{lost_receive_time}
+        <if test="lost_id != null and lost_id != ''">
+            where lost_id = #{lost_id}
+        </if>
+    </update>
+</mapper>
+

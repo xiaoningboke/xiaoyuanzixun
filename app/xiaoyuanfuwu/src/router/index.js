@@ -5,6 +5,7 @@ import ershou from './ershou'; //二手交易
 import recruit from './recruit'; //兼职招聘
 import user from './user'; //兼职招聘
 import lost from './lost'; //失物招领
+import zixun from './zixun'; //资讯
 
 Vue.use(Router);
 
@@ -20,6 +21,7 @@ export default new Router({
     ...ershou,
     ...recruit,
     ...user,
-    ...lost
+    ...lost,
+    ...zixun
   ]
 });
