@@ -6,6 +6,7 @@ import recruit from './recruit'; //兼职招聘
 import user from './user'; //兼职招聘
 import lost from './lost'; //失物招领
 import zixun from './zixun'; //资讯
+import chuangye from './chuangye'; //创业
 
 Vue.use(Router);
 
@@ -22,6 +23,7 @@ export default new Router({
     ...recruit,
     ...user,
     ...lost,
-    ...zixun
+    ...zixun,
+    ...chuangye
   ]
 });

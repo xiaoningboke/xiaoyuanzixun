@@ -2,7 +2,7 @@ const routes = [
   {
     path: '/demo',
     name: 'demo',
-    component: resolve => require(['@/modules/demo/zixun.vue'], resolve),
+    component: resolve => require(['@/modules/demo/chuangye.vue'], resolve),
     meta: { title: '测试' }
   },
   {

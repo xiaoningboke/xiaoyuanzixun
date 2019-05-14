@@ -38,3 +38,5 @@ export const addshiwu = action(`zixun/addshiwu`); //资讯详情
 export const selshiwu = action(`zixun/selshiwu`); //失物招领列表
 export const findshiwu = action(`zixun/findshiwu`); //失物招领详情
 export const lingqu = action(`zixun/lingqu`); //失物招领详情
+export const addChuangye = action(`chuangye/addcahungye`); //添加创业服务
+export const selchuangye = action(`chuangye/selchuangye`); //创业服务列表

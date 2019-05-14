@@ -49,7 +49,11 @@
         <span slot="text">失物招领</span>
       </yd-grids-item>
       <yd-grids-item>
-        <img slot="icon" src="http://static.ydcss.com/ydui/img/logo.png" />
+        <img
+          slot="icon"
+          src="http://static.ydcss.com/ydui/img/logo.png"
+          v-on:click.stop="onPressPush('chuangye')"
+        />
         <span slot="text">创业服务</span>
       </yd-grids-item>
       <yd-grids-item>
